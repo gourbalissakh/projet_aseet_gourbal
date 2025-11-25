@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './stores/authStore';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLayout } from './layouts/AdminLayout';
+import { EtudiantLayout } from './layouts/EtudiantLayout';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -24,13 +25,32 @@ import { CoursPage } from './pages/CoursPage';
 import { EmploisTempsPage } from './pages/EmploisTempsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { UnauthorizedPage } from './pages/UnauthorizedPage';
+// Pages Étudiant
+import { DashboardEtudiantPage } from './pages/DashboardEtudiantPage';
+import { NotesPage } from './pages/NotesPage';
+import { MesEmploisTempsPage } from './pages/MesEmploisTempsPage';
 
 function App() {
-  const { initAuth, isAuthenticated } = useAuthStore();
+  const { initAuth, isAuthenticated, user } = useAuthStore();
 
   useEffect(() => {
     initAuth();
   }, [initAuth]);
+
+  // Redirection intelligente basée sur le rôle
+  const getDefaultRoute = () => {
+    if (!user) return '/login';
+    switch (user.role) {
+      case 'etudiant':
+        return '/etudiant/dashboard';
+      case 'enseignant':
+        return '/enseignant/dashboard';
+      case 'admin':
+        return '/admin/dashboard';
+      default:
+        return '/login';
+    }
+  };
 
   return (
     <BrowserRouter>
@@ -64,7 +84,7 @@ function App() {
         <Route
           path="/login"
           element={
-            isAuthenticated ? <Navigate to="/admin/dashboard" replace /> : <LoginPage />
+            isAuthenticated ? <Navigate to={getDefaultRoute()} replace /> : <LoginPage />
           }
         />
 
@@ -72,7 +92,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['admin']}>
               <AdminLayout />
             </ProtectedRoute>
           }
@@ -90,9 +110,34 @@ function App() {
           <Route path="parametres" element={<ParametresPage />} />
         </Route>
 
+        {/* Protected Etudiant Routes with EtudiantLayout */}
+        <Route
+          path="/etudiant"
+          element={
+            <ProtectedRoute allowedRoles={['etudiant']}>
+              <EtudiantLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<DashboardEtudiantPage />} />
+          <Route path="cours" element={<DashboardEtudiantPage />} />
+          <Route path="emplois-temps" element={<MesEmploisTempsPage />} />
+          <Route path="notes" element={<NotesPage />} />
+          <Route path="profil" element={<ProfilPage />} />
+        </Route>
+
         {/* Redirections */}
-        <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
-        <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route 
+          path="/" 
+          element={
+            isAuthenticated ? (
+              <Navigate to={getDefaultRoute()} replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          } 
+        />
+        <Route path="/dashboard" element={<Navigate to={getDefaultRoute()} replace />} />
         
         {/* Error Pages */}
         <Route path="/unauthorized" element={<UnauthorizedPage />} />

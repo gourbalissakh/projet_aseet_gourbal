@@ -216,26 +216,31 @@ class CompleteDatabaseSeeder extends Seeder
             }
         }
 
-        // 9. Créer quelques notes pour les étudiants de L3
-        $etudiants = User::where('role', 'etudiant')
-            ->whereHas('niveau', function ($query) {
-                $query->where('code', 'L3');
-            })
-            ->get();
+        // 9. Créer des notes pour TOUS les étudiants (avec plusieurs évaluations par cours)
+        $etudiants = User::where('role', 'etudiant')->get();
+        $typesEvaluation = ['Devoir', 'Examen', 'TP', 'Projet', 'Contrôle Continu'];
 
         foreach ($etudiants as $etudiant) {
             $coursClasse = Cours::where('classe_id', $etudiant->classe_id)->get();
             
-            foreach ($coursClasse->random(min(3, $coursClasse->count())) as $cours) {
-                Note::create([
-                    'etudiant_id' => $etudiant->id,
-                    'cours_id' => $cours->id,
-                    'note' => rand(8, 20),
-                    'coefficient' => rand(1, 3),
-                    'type_evaluation' => ['Devoir', 'Examen', 'TP'][array_rand(['Devoir', 'Examen', 'TP'])],
-                    'date_evaluation' => now()->subDays(rand(1, 60)),
-                    'semestre' => 'S' . rand(1, 2),
-                ]);
+            // Pour chaque cours de la classe, créer 2-4 notes avec différents types d'évaluation
+            foreach ($coursClasse as $cours) {
+                $nombreNotes = rand(2, 4); // Entre 2 et 4 évaluations par cours
+                
+                for ($i = 0; $i < $nombreNotes; $i++) {
+                    $semestre = rand(1, 2);
+                    $noteValue = rand(8, 20); // Notes entre 8 et 20
+                    
+                    Note::create([
+                        'etudiant_id' => $etudiant->id,
+                        'cours_id' => $cours->id,
+                        'note' => $noteValue,
+                        'coefficient' => rand(1, 3),
+                        'type_evaluation' => $typesEvaluation[array_rand($typesEvaluation)],
+                        'date_evaluation' => now()->subDays(rand(1, 120)),
+                        'semestre' => $semestre,
+                    ]);
+                }
             }
         }
 

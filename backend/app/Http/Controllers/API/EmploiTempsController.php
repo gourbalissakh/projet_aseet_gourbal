@@ -14,14 +14,25 @@ class EmploiTempsController extends Controller
      */
 public function index(Request $request): JsonResponse
 {
+    $user = $request->user();
     $query = EmploiTemps::with(['cours', 'classe']);
     
-    // Filtrer par classe si le paramètre est fourni
-    if ($request->has('classe_id')) {
+    // Si l'utilisateur est un étudiant, filtrer automatiquement par sa classe
+    if ($user->role === 'etudiant' && $user->classe_id) {
+        $query->where('classe_id', $user->classe_id);
+    }
+    // Si l'utilisateur est un enseignant, filtrer par ses cours
+    elseif ($user->role === 'enseignant') {
+        $query->whereHas('cours', function($q) use ($user) {
+            $q->where('enseignant_id', $user->id);
+        });
+    }
+    // Si admin, vérifier s'il y a un filtre de classe demandé
+    elseif ($request->has('classe_id')) {
         $query->where('classe_id', $request->classe_id);
     }
     
-    $emplois = $query->get();
+    $emplois = $query->orderBy('jour')->orderBy('heure_debut')->get();
     
     return response()->json([
         'success' => true,

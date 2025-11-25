@@ -9,6 +9,12 @@ export interface User {
   adresse?: string;
   statut?: string;
   sexe?: string;
+  classe_id?: number;
+  classe?: {
+    id: number;
+    nom: string;
+    code: string;
+  };
   created_at?: string;
   updated_at?: string;
 }

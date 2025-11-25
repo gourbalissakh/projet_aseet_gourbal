@@ -9,6 +9,7 @@ use App\Http\Controllers\API\CoursController;
 use App\Http\Controllers\API\EmploiTempsController;
 use App\Http\Controllers\API\FiliereController;
 use App\Http\Controllers\API\NiveauController;
+use App\Http\Controllers\API\NoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +61,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('emplois-temps', EmploiTempsController::class);
     Route::apiResource('filieres', FiliereController::class);
     Route::apiResource('niveaux', NiveauController::class);
+    Route::apiResource('notes', NoteController::class);
+    Route::get('notes/statistiques', [NoteController::class, 'statistiques']);
 });

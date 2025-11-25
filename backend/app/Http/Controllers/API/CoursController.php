@@ -12,9 +12,26 @@ class CoursController extends Controller
     /**
      * Afficher tous les cours
      */
- public function index(): JsonResponse
+ public function index(Request $request): JsonResponse
 {
-    $cours = Cours::with(['classe', 'enseignant'])->get();
+    $user = $request->user();
+    
+    // Si l'utilisateur est un étudiant, filtrer par sa classe
+    if ($user->role === 'etudiant' && $user->classe_id) {
+        $cours = Cours::with(['classe', 'enseignant'])
+            ->where('classe_id', $user->classe_id)
+            ->get();
+    } 
+    // Si l'utilisateur est un enseignant, filtrer par ses cours
+    elseif ($user->role === 'enseignant') {
+        $cours = Cours::with(['classe', 'enseignant'])
+            ->where('enseignant_id', $user->id)
+            ->get();
+    }
+    // Si l'utilisateur est un admin, afficher tous les cours
+    else {
+        $cours = Cours::with(['classe', 'enseignant'])->get();
+    }
     
     return response()->json([
         'success' => true,
