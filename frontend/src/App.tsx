@@ -5,6 +5,7 @@ import { useAuthStore } from './stores/authStore';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLayout } from './layouts/AdminLayout';
 import { EtudiantLayout } from './layouts/EtudiantLayout';
+import { EnseignantLayout } from './layouts/EnseignantLayout';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -29,6 +30,11 @@ import { UnauthorizedPage } from './pages/UnauthorizedPage';
 import { DashboardEtudiantPage } from './pages/DashboardEtudiantPage';
 import { NotesPage } from './pages/NotesPage';
 import { MesEmploisTempsPage } from './pages/MesEmploisTempsPage';
+import { MesCoursPage } from './pages/MesCoursPage';
+// Pages Enseignant
+import { DashboardEnseignantPage } from './pages/DashboardEnseignantPage';
+import { GestionNotesPage } from './pages/enseignant/GestionNotesPage';
+import { MonEmploiTempsPage } from './pages/enseignant/MonEmploiTempsPage';
 
 function App() {
   const { initAuth, isAuthenticated, user } = useAuthStore();
@@ -120,9 +126,25 @@ function App() {
           }
         >
           <Route path="dashboard" element={<DashboardEtudiantPage />} />
-          <Route path="cours" element={<DashboardEtudiantPage />} />
+          <Route path="cours" element={<MesCoursPage />} />
           <Route path="emplois-temps" element={<MesEmploisTempsPage />} />
           <Route path="notes" element={<NotesPage />} />
+          <Route path="profil" element={<ProfilPage />} />
+        </Route>
+
+        {/* Protected Enseignant Routes with EnseignantLayout */}
+        <Route
+          path="/enseignant"
+          element={
+            <ProtectedRoute allowedRoles={['enseignant']}>
+              <EnseignantLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<DashboardEnseignantPage />} />
+          <Route path="cours" element={<MesCoursPage />} />
+          <Route path="notes" element={<GestionNotesPage />} />
+          <Route path="emplois-temps" element={<MonEmploiTempsPage />} />
           <Route path="profil" element={<ProfilPage />} />
         </Route>
 

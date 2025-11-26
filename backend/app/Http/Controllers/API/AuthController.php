@@ -27,6 +27,11 @@ class AuthController extends Controller
         $validated['password'] = Hash::make($validated['password']);
         $user = User::create($validated);
 
+        // Charger les relations pour les étudiants
+        if ($user->role === 'etudiant') {
+            $user->load(['filiere', 'niveau', 'classe']);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -50,6 +55,11 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $validated['email'])->first();
+
+        // Charger les relations pour les étudiants
+        if ($user && $user->role === 'etudiant') {
+            $user->load(['filiere', 'niveau', 'classe']);
+        }
 
         if (!$user || !Hash::check($validated['password'], $user->password)) {
             return response()->json([

@@ -106,8 +106,8 @@ export const AdminLayout: React.FC = () => {
                   <GraduationCap className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold text-gray-900">AKHOUYE</h1>
-                  <p className="text-xs text-gray-500">Academie</p>
+                  <h1 className="text-lg font-bold text-gray-900">Akhouye Académie</h1>
+                  <p className="text-xs text-gray-500">Espace Admin</p>
                 </div>
               </div>
             </div>

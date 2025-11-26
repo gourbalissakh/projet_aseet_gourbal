@@ -22,7 +22,7 @@ public function index(Request $request): JsonResponse
         $query->where('role', $request->role);
     }
     
-    $users = $query->paginate(10);
+    $users = $query->paginate($request->input('per_page', 10));
     
     return response()->json([
         'success' => true,

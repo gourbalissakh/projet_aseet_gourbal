@@ -15,7 +15,7 @@ import {
 import { useAuthStore } from '../stores/authStore';
 import toast from 'react-hot-toast';
 
-export const EtudiantLayout: React.FC = () => {
+export const EnseignantLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuthStore();
@@ -24,27 +24,27 @@ export const EtudiantLayout: React.FC = () => {
   const menuItems = [
     {
       label: 'Tableau de Bord',
-      path: '/etudiant/dashboard',
+      path: '/enseignant/dashboard',
       icon: LayoutDashboard,
     },
     {
       label: 'Mes Cours',
-      path: '/etudiant/cours',
+      path: '/enseignant/cours',
       icon: BookOpen,
     },
     {
-      label: 'Emploi du Temps',
-      path: '/etudiant/emplois-temps',
-      icon: Calendar,
-    },
-    {
-      label: 'Mes Notes',
-      path: '/etudiant/notes',
+      label: 'Gestion des Notes',
+      path: '/enseignant/notes',
       icon: FileText,
     },
     {
+      label: 'Emploi du Temps',
+      path: '/enseignant/emplois-temps',
+      icon: Calendar,
+    },
+    {
       label: 'Mon Profil',
-      path: '/etudiant/profil',
+      path: '/enseignant/profil',
       icon: User,
     },
   ];
@@ -71,20 +71,20 @@ export const EtudiantLayout: React.FC = () => {
               {/* Logo */}
               <div className="p-6 border-b border-gray-200">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-700 rounded-lg flex items-center justify-center shadow-md">
                     <GraduationCap className="text-white" size={24} />
                   </div>
                   <div>
                     <h1 className="text-xl font-bold text-gray-900">Akhouye Académie</h1>
-                    <p className="text-xs text-gray-500">Espace Étudiant</p>
+                    <p className="text-xs text-gray-500">Espace Enseignant</p>
                   </div>
                 </div>
               </div>
 
               {/* User Info */}
-              <div className="p-4 mx-4 my-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100">
+              <div className="p-4 mx-4 my-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-100">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-700 rounded-full flex items-center justify-center shadow-md">
                     <span className="text-sm font-bold text-white">
                       {user?.prenom?.charAt(0)}{user?.nom?.charAt(0)}
                     </span>
@@ -96,9 +96,9 @@ export const EtudiantLayout: React.FC = () => {
                     <p className="text-xs text-gray-600 truncate">
                       {user?.matricule || user?.email}
                     </p>
-                    {user?.classe && (
-                      <p className="text-xs text-blue-600 font-medium mt-1">
-                        {user.classe.nom}
+                    {user?.specialite && (
+                      <p className="text-xs text-purple-600 font-medium mt-1">
+                        {user.specialite}
                       </p>
                     )}
                   </div>
@@ -117,7 +117,7 @@ export const EtudiantLayout: React.FC = () => {
                       to={item.path}
                       className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                         isActive
-                          ? 'bg-blue-50 text-blue-700 font-medium'
+                          ? 'bg-purple-50 text-purple-700 font-medium'
                           : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     >
@@ -166,7 +166,7 @@ export const EtudiantLayout: React.FC = () => {
                 </p>
                 <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
               </div>
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-700 rounded-full flex items-center justify-center shadow-md">
                 <span className="text-sm font-bold text-white">
                   {user?.prenom?.charAt(0)}{user?.nom?.charAt(0)}
                 </span>

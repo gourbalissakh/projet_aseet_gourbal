@@ -9,6 +9,7 @@ export interface User {
   adresse?: string;
   statut?: string;
   sexe?: string;
+  specialite?: string;
   classe_id?: number;
   classe?: {
     id: number;
