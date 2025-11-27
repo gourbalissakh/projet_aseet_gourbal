@@ -42,8 +42,8 @@ export const DashboardPage: React.FC = () => {
           api.get('/emplois-temps')
         ]);
 
-        const etudiants = users.data.data.filter((u: any) => u.role === 'etudiant').length;
-        const enseignants = users.data.data.filter((u: any) => u.role === 'enseignant').length;
+        const etudiants = users.data.data.filter((u: User) => u.role === 'etudiant').length;
+        const enseignants = users.data.data.filter((u: User) => u.role === 'enseignant').length;
 
         setStats({
           etudiants,

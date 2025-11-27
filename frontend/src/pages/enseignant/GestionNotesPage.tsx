@@ -15,6 +15,7 @@ import {
 import { useAuthStore } from '../../stores/authStore';
 import axiosInstance from '../../services/api';
 import toast from 'react-hot-toast';
+import { ErrorHandler, ERROR_MESSAGES } from '../../utils/errorHandler';
 
 interface Etudiant {
   id: number;
@@ -107,8 +108,7 @@ export const GestionNotesPage: React.FC = () => {
         setSelectedClasse(mesCours[0].classe_id);
       }
     } catch (error) {
-      console.error('Erreur lors du chargement des cours:', error);
-      toast.error('Erreur lors du chargement des cours');
+      ErrorHandler.handleLoadError(ERROR_MESSAGES.LOAD_COURS, error);
     } finally {
       setLoading(false);
     }
@@ -139,8 +139,7 @@ export const GestionNotesPage: React.FC = () => {
 
       setEtudiants(etudiantsWithNotes);
     } catch (error) {
-      console.error('Erreur lors du chargement des étudiants:', error);
-      toast.error('Erreur lors du chargement des étudiants');
+      ErrorHandler.handleLoadError(ERROR_MESSAGES.LOAD_ETUDIANTS, error);
     } finally {
       setLoading(false);
     }
@@ -171,8 +170,7 @@ export const GestionNotesPage: React.FC = () => {
       });
       fetchEtudiants();
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de la note:', error);
-      toast.error('Erreur lors de l\'ajout de la note');
+      ErrorHandler.handleSaveError(ERROR_MESSAGES.SAVE_NOTE, error);
     }
   };
 
@@ -188,8 +186,7 @@ export const GestionNotesPage: React.FC = () => {
       setEditingNote(null);
       fetchEtudiants();
     } catch (error) {
-      console.error('Erreur lors de la modification de la note:', error);
-      toast.error('Erreur lors de la modification de la note');
+      ErrorHandler.handleSaveError(ERROR_MESSAGES.SAVE_NOTE, error);
     }
   };
 
@@ -201,8 +198,7 @@ export const GestionNotesPage: React.FC = () => {
       toast.success('Note supprimée avec succès');
       fetchEtudiants();
     } catch (error) {
-      console.error('Erreur lors de la suppression de la note:', error);
-      toast.error('Erreur lors de la suppression de la note');
+      ErrorHandler.handleDeleteError(ERROR_MESSAGES.DELETE_NOTE, error);
     }
   };
 
