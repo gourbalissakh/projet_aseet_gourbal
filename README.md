@@ -20,9 +20,7 @@ Application web moderne de gestion académique pour établissements d'enseigneme
 - [Architecture](#-architecture)
 - [Documentation](#-documentation)
 - [Sécurité](#-sécurité)
-- [Déploiement](#-déploiement)
 - [Contribuer](#-contribuer)
-- [Licence](#-licence)
 
 ---
 
@@ -392,23 +390,6 @@ APP_DEBUG=false
 chmod -R 755 storage bootstrap/cache
 ```
 
-### Hébergement Recommandé
-
-#### Frontend
-- ✅ **Vercel** - Déploiement automatique depuis Git
-- ✅ **Netlify** - CI/CD intégré
-- ✅ **GitHub Pages** - Gratuit pour projets publics
-
-#### Backend
-- ✅ **DigitalOcean** - VPS Linux complet
-- ✅ **AWS EC2** - Cloud scalable
-- ✅ **Heroku** - PaaS simple (avec addon MySQL)
-
-#### Base de Données
-- ✅ **PlanetScale** - MySQL serverless
-- ✅ **AWS RDS** - MySQL managé
-- ✅ **Railway** - PostgreSQL/MySQL gratuit
-
 ---
 
 ## 🤝 Contribuer
@@ -487,12 +468,6 @@ Pour toute question ou problème :
 
 ---
 
-## 📄 Licence
-
-Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
----
-
 ## 🙏 Remerciements
 
 - React Team pour l'excellent framework
@@ -500,14 +475,6 @@ Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus
 - TailwindCSS pour le système de design
 - Framer Motion pour les animations
 - Communauté open-source
-
----
-
-## 📈 Stats du Projet
-
-![GitHub stars](https://img.shields.io/github/stars/gourbalissakh/projet_aseet_gourbal?style=social)
-![GitHub forks](https://img.shields.io/github/forks/gourbalissakh/projet_aseet_gourbal?style=social)
-![GitHub issues](https://img.shields.io/github/issues/gourbalissakh/projet_aseet_gourbal)
 
 ---
 
