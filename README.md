@@ -357,40 +357,7 @@ Consultez [SECURITE.md](frontend/SECURITE.md) pour :
 
 ---
 
-## 🚢 Déploiement
 
-### Production Frontend
-
-```bash
-cd frontend
-
-# Build de production
-npm run build
-
-# Les fichiers sont dans dist/
-# Déployer sur Netlify, Vercel, ou serveur web
-```
-
-### Production Backend
-
-```bash
-cd backend
-
-# Optimisation
-composer install --optimize-autoloader --no-dev
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# Configuration .env
-APP_ENV=production
-APP_DEBUG=false
-
-# Permissions
-chmod -R 755 storage bootstrap/cache
-```
-
----
 
 ## 🤝 Contribuer
 
