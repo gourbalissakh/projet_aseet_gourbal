@@ -58,13 +58,30 @@ export const GestionNiveauxPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation
+    if (!formData.nom.trim()) {
+      alert('Le nom du niveau est requis');
+      return;
+    }
+    
+    if (!formData.filiere_id || formData.filiere_id === '') {
+      alert('Veuillez sélectionner une filière');
+      return;
+    }
+    
     setLoading(true);
 
     try {
+      const payload = {
+        nom: formData.nom.trim(),
+        filiere_id: Number(formData.filiere_id) // Convertir en nombre
+      };
+      
       if (editingId) {
-        await api.put(`/niveaux/${editingId}`, formData);
+        await api.put(`/niveaux/${editingId}`, payload);
       } else {
-        await api.post('/niveaux', formData);
+        await api.post('/niveaux', payload);
       }
 
       fetchNiveaux();

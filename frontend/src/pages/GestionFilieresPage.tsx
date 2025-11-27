@@ -38,13 +38,30 @@ export const GestionFilieresPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation
+    if (!formData.nom.trim()) {
+      alert('Le nom de la filière est requis');
+      return;
+    }
+    
+    if (!formData.code.trim()) {
+      alert('Le code de la filière est requis');
+      return;
+    }
+    
     setLoading(true);
 
     try {
+      const payload = {
+        nom: formData.nom.trim(),
+        code: formData.code.trim().toUpperCase()
+      };
+      
       if (editingId) {
-        await api.put(`/filieres/${editingId}`, formData);
+        await api.put(`/filieres/${editingId}`, payload);
       } else {
-        await api.post('/filieres', formData);
+        await api.post('/filieres', payload);
       }
 
       fetchFilieres();
